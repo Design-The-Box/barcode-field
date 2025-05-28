@@ -16,7 +16,13 @@ function startScanner(selectedDeviceId) {
   codeReader.decodeFromVideoDevice(selectedDeviceId, 'scanner', (result, err) => {
     const scanArea = document.querySelector('.scan-area');
     if (result) {
-      document.getElementById('{{ $getId() }}').value = result.text; // Set barcode value
+      const barcodeInput = document.querySelector('input[name="barcode"]');
+        if (barcodeInput) {
+            barcodeInput.value = result.text;
+            barcodeInput.dispatchEvent(new Event('input'));// Ensure Filament detects the change//
+        } else {
+            console.error("Barcode input field not found!");
+        }
       scanArea.style.borderColor = 'green';
       stopScanning(); // Optionally stop scanning after successful read
       closeScannerModal(); // Close the modal after successful scan
