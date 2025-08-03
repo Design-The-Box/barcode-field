@@ -22,6 +22,11 @@ class FilamentBarcodeScannerFieldServiceProvider extends PackageServiceProvider
         // You can safely call package methods here as it's already initialized
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'barcode-field'); // Register the views path
 
+        // Publish the barcode scanner view
+        $this->publishes([
+            __DIR__.'/../resources/views' => resource_path('views/vendor/barcode-field'),
+        ],'barcode-scanner-views');
+        
         // Publish the barcode scanner script
         $this->publishes([
             __DIR__.'/../resources/js/barcode-scanner.js' => public_path('vendor/barcode-field/barcode-scanner.js'),
