@@ -4,12 +4,12 @@
 
 <div xmlns:x-filament="http://www.w3.org/1999/html">
     <div class="grid gap-y-2">
-        <div class="flex items-center gap-x-3 justify-between">
-            <label for="{{ $getId() }}" class="fi-fo-field-wrp-label inline-flex items-center gap-x-3">
+        <div class="flex gap-x-3 justify-between items-center">
+            <label for="{{ $getId() }}" class="inline-flex gap-x-3 items-center fi-fo-field-wrp-label">
                 <span class="text-sm font-medium leading-6 text-gray-950 dark:text-white">
                     {{ $getLabel() ?? 'Input Label' }}
                     @if($isRequired())
-                        <sup class="text-danger-600 dark:text-danger-400 font-medium">*</sup>
+                        <sup class="font-medium text-danger-600 dark:text-danger-400">*</sup>
                     @endif
                 </span>
             </label>
@@ -22,11 +22,11 @@
                     id="{{ $getId() }}"
                     value="{{ $getState() }}"
                     placeholder="{{ $getPlaceholder() }}"
-                    class="w-full pr-10"
+                    class="pr-10 w-full"
             />
 
             <!-- Trigger Button for Filament Modal -->
-            <button type="button" onclick="openScannerModal()" class="absolute inset-y-0 right-0 flex items-center pr-3 focus:outline-none" aria-label="Scan Barcode">
+            <button type="button" onclick="openScannerModal('{{ $getId() }}')" class="flex absolute inset-y-0 right-0 items-center pr-3 focus:outline-none" aria-label="Scan Barcode">
                 @if($getExtraAttributes()['icon'] ?? null)
                     <span class="text-gray-400 dark:text-gray-200">
                         <x-dynamic-component :component="$getExtraAttributes()['icon']" class="w-5 h-5" />
