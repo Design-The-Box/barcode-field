@@ -1,7 +1,9 @@
 const codeReader = new ZXing.BrowserMultiFormatReader();
 let isScanning = false;
+let barcodeInputId = null;
 
-function openScannerModal() {
+function openScannerModal(inputId) {
+  barcodeInputId = inputId; // Store input ID
   // Open the Filament modal
   window.dispatchEvent(new CustomEvent('open-modal', { detail: { id: 'barcode-scanner-modal' } }));
 }
@@ -10,13 +12,15 @@ function closeScannerModal() {
   // Close the Filament modal
   window.dispatchEvent(new CustomEvent('close-modal', { detail: { id: 'barcode-scanner-modal' } }));
   stopScanning(); // Make sure to stop the camera when the modal closes
+  barcodeInputId = null; // Reset stored input ID
 }
 
 function startScanner(selectedDeviceId) {
   codeReader.decodeFromVideoDevice(selectedDeviceId, 'scanner', (result, err) => {
     const scanArea = document.querySelector('.scan-area');
     if (result) {
-      document.getElementById('{{ $getId() }}').value = result.text; // Set barcode value
+      // Get element from stored input ID
+      document.getElementById(barcodeInputId).value = result.text; // Set barcode value
       scanArea.style.borderColor = 'green';
       stopScanning(); // Optionally stop scanning after successful read
       closeScannerModal(); // Close the modal after successful scan
